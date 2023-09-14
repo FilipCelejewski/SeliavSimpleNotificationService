@@ -1,0 +1,1 @@
+call aws cloudformation delete-stack --stack-name filcel-stack-dev

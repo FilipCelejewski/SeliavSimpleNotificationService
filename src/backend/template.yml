@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  Environment:
+    Type: String
+Resources:
+  Topic:
+    Type: 'AWS::SNS::Topic'
+    Properties: {
+      TopicName: !Sub "filcel-notification-topic-${Environment}"
+    }
+  Subscription:
+    Type: 'AWS::SNS::Subscription'
+    Properties:
+      TopicArn: !Ref Topic
+      Protocol: "sms"
+      Endpoint: "+48724091624"
+  NotificationFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: index.handler
+      Role: arn:aws:iam::953201351151:role/service-role/filcel-notification-function-role-76wat2d2
+      Code:
+        S3Bucket: filcel-deployments
+        S3Key: function.zip
+      Runtime: nodejs18.x
+      Timeout: 15
+      TracingConfig:
+        Mode: Active
