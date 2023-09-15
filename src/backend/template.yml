@@ -17,12 +17,43 @@ Resources:
   NotificationFunction:
     Type: AWS::Lambda::Function
     Properties:
+      FunctionName: !Sub "filcel-notification-function-${Environment}"
       Handler: index.handler
-      Role: arn:aws:iam::953201351151:role/service-role/filcel-notification-function-role-76wat2d2
+      Role: !Sub "arn:aws:iam::${AWS::AccountId}:role/filcel-notification-function-role-${Environment}"
       Code:
         S3Bucket: filcel-deployments
         S3Key: function.zip
-      Runtime: nodejs18.x
+      Runtime: nodejs14.x
       Timeout: 15
       TracingConfig:
         Mode: Active
+      Environment:
+        Variables:
+          TopicArn: !Ref Topic
+  FunctionPolicy:
+    Type: "AWS::IAM::ManagedPolicy"
+    Properties:
+      ManagedPolicyName: !Sub "filcel-notification-function-policy-${Environment}"
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - 'sns:Publish'
+            Resource: '*'
+      Roles:
+        - !Ref FunctionRole
+  FunctionRole: 
+    Type: "AWS::IAM::Role"
+    Properties:
+      RoleName: !Sub "filcel-notification-function-role-${Environment}"
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement: 
+          - Effect: "Allow"
+            Principal: 
+              Service: 
+                - "lambda.amazonaws.com"
+            Action: 
+              - "sts:AssumeRole"
+      Path: "/"
