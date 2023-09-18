@@ -1,5 +1,10 @@
+$BuildDirectoryName = "..\build"
+
 Write-Host "Creating build directory"
-New-Item -ItemType Directory -Name "..\build"
+if (Test-Path $BuildDirectoryName) {
+    Remove-Item $BuildDirectoryName -Force -Recurse
+}
+New-Item -ItemType Directory -Name $BuildDirectoryName
 
 Write-Host "Compressing notification function code"
 Compress-Archive -Path ..\src\backend\index.js -DestinationPath ..\build\function.zip 
