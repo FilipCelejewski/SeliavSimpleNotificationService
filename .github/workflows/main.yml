@@ -11,4 +11,4 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: "Deploy"
-        run: scripts\deploy.bat
+        run: scripts/deploy.bat
