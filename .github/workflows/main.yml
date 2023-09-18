@@ -1,0 +1,14 @@
+name: Development
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    name: Test application
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: "echo"
+        run: echo halo halo
