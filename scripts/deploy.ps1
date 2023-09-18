@@ -14,4 +14,4 @@ aws s3 cp $BuildDirectoryName\function.zip s3://filcel-deployments/function.zip
 
 Write-Host "Creating stack using CloudFormation"
 
-aws cloudformation create-stack --stack-name filcel-stack-dev --template-body file://../src/backend/template.yml --parameters ParameterKey=Environment,ParameterValue=dev --capabilities CAPABILITY_NAMED_IAM
+aws cloudformation create-stack --stack-name filcel-stack-dev --template-body file://src/backend/template.yml --parameters ParameterKey=Environment,ParameterValue=dev --capabilities CAPABILITY_NAMED_IAM
