@@ -1,14 +1,14 @@
-name: Development
+name: Deploy
 
 on:
   push:
     branches:
       - main
 jobs:
-  test:
-    name: Test application
+  Deploy:
+    name: Deploy
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: "echo"
-        run: echo halo halo
+      - name: "Deploy"
+        run: scripts\deploy.bat
