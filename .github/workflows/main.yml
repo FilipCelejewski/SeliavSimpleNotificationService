@@ -11,6 +11,6 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: "list files"
-        run: ls
+        run: ls -al
       - name: "Deploy"
         run: scripts/deploy.bat
