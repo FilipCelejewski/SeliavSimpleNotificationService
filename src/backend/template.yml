@@ -16,6 +16,7 @@ Resources:
       Endpoint: "+48724091624"
   NotificationFunction:
     Type: AWS::Lambda::Function
+    DependsOn: FunctionRole
     Properties:
       FunctionName: !Sub "filcel-notification-function-${Environment}"
       Handler: index.handler
