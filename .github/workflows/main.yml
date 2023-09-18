@@ -10,5 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      - name: "list files"
+        run: ls
       - name: "Deploy"
         run: scripts/deploy.bat
