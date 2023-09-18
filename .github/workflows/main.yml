@@ -10,9 +10,6 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v3
-      - name: "Print current folder"
-        run: pwd
-      - name: "List all files"
-        run: ls  -al
       - name: "Run deployment script"
-        run: scripts/deploy.bat
+        shell: pwsh
+        run: scripts/deploy.ps1
