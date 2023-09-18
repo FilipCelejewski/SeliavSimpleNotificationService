@@ -10,6 +10,11 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v3
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::953201351151:role/filcel-github-ci-role
+          aws-region: eu-north-1
       - name: "Run deployment script"
         shell: pwsh
         run: scripts/deploy.ps1
