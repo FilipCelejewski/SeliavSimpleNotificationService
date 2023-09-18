@@ -1,16 +1,17 @@
 name: Deploy
-
 on:
   push:
     branches:
       - main
 jobs:
-  Deploy:
-    name: Deploy
+  ExperimentalJob:
+    name: Experimental job
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: "list files"
+      - name: "Print current folder"
+        run: pwd
+      - name: "List all files"
         run: ls -al
-      - name: "Deploy"
+      - name: "Run deployment script"
         run: scripts/deploy.bat
