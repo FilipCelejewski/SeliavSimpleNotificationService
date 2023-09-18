@@ -1,3 +1,5 @@
+Get-ChildItem
+
 Write-Host "Creating build directory"
 New-Item -ItemType Directory -Name "build"
 
