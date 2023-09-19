@@ -13,13 +13,5 @@ Compress-Archive -Path src\backend\index.js -DestinationPath $BuildDirectoryName
 Write-Host "Uploading notification function zip to S3 bucket"
 aws s3 cp $BuildDirectoryName\function.zip s3://filcel-deployments/function.zip
 
-Write-Host "Checking if stack already exists"
-aws cloudformation describe-stacks --stack-name $StackName
-if ($LASTEXITCODE -eq 0)
-{
-    Write-Host "Updating stack using CloudFormation"
-    aws cloudformation update-stack --stack-name $StackName --template-body file://src/backend/template.yml --parameters ParameterKey=Environment,ParameterValue=dev --capabilities CAPABILITY_NAMED_IAM
-} else {
-    Write-Host "Creating stack using CloudFormation"
-    aws cloudformation create-stack --stack-name $StackName --template-body file://src/backend/template.yml --parameters ParameterKey=Environment,ParameterValue=dev --capabilities CAPABILITY_NAMED_IAM
-}
+aws cloudformation deploy --stack-name $StackName --template-file src/backend/template.yml --parameter-overrides Environment=dev --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset
+
