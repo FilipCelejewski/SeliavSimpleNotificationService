@@ -1,5 +1,7 @@
+param ($environment)
+
 $BuildDirectoryName = "build"
-$StackName = "filcel-stack-dev"
+$StackName = "filcel-stack-$environment"
 
 Write-Host "Creating build directory"
 if (Test-Path $BuildDirectoryName) {
@@ -13,5 +15,5 @@ Compress-Archive -Path src\backend\index.js -DestinationPath $BuildDirectoryName
 Write-Host "Uploading notification function zip to S3 bucket"
 aws s3 cp $BuildDirectoryName\function.zip s3://filcel-deployments/function.zip
 
-aws cloudformation deploy --stack-name $StackName --template-file src/backend/template.yml --parameter-overrides Environment=dev --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset
+aws cloudformation deploy --stack-name $StackName --template-file src/backend/template.yml --parameter-overrides Environment=$environment --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset
 

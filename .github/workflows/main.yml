@@ -7,8 +7,8 @@ permissions:
   id-token: write
   contents: read
 jobs:
-  ExperimentalJob:
-    name: Experimental job
+  DeployToQa:
+    name: Deploy to QA
     runs-on: windows-latest
     timeout-minutes: 10
     steps:
@@ -21,4 +21,19 @@ jobs:
           aws-region: eu-north-1
       - name: "Run deployment script"
         shell: pwsh
-        run: scripts/deploy.ps1
+        run: scripts/deploy.ps1 -environment qa
+  DeployToProd:
+    name: Deploy to PROD
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::953201351151:role/filcel-github-ci-role
+          aws-region: eu-north-1
+      - name: "Run deployment script"
+        shell: pwsh
+        run: scripts/deploy.ps1 -environment prod
