@@ -28,7 +28,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: wait
-        uses: actions/ManualValidation@v0
+        uses: ManualValidation@v0
   DeployToProd:
     name: Deploy to PROD
     needs: TestingInQa
