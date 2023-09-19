@@ -24,6 +24,7 @@ jobs:
         run: scripts/deploy.ps1 -environment qa
   DeployToProd:
     name: Deploy to PROD
+    needs: DeployToQa
     runs-on: windows-latest
     timeout-minutes: 10
     steps:
