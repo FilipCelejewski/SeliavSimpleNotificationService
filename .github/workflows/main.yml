@@ -22,21 +22,11 @@ jobs:
       - name: "Run deployment script"
         shell: pwsh
         run: scripts/deploy.ps1 -environment qa
-  TestingInQa:
-    name: Testing In QA
-    needs: DeployToQa
-    runs-on: ubuntu-latest
-    steps:
-      - name: wait
-      - uses: Automattic/action-required-review@v3
-        with:
-          token: ${{ secrets.REQUIRED_REVIEWS_TOKEN }}
-          requirements: |
-            - paths: unmatched
   DeployToProd:
     name: Deploy to PROD
     needs: TestingInQa
     runs-on: windows-latest
+    environment: prod
     timeout-minutes: 10
     steps:
       - name: Checkout repository
