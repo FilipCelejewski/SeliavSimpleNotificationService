@@ -22,9 +22,16 @@ jobs:
       - name: "Run deployment script"
         shell: pwsh
         run: scripts/deploy.ps1 -environment qa
+  TestingInQa:
+    name: Testing In QA
+    needs: DeployToQa
+    runs-on: windows-latest
+    steps:
+      - name: wait
+        uses: actions/ManualValidation@v0
   DeployToProd:
     name: Deploy to PROD
-    needs: DeployToQa
+    needs: TestingInQa
     runs-on: windows-latest
     timeout-minutes: 10
     steps:
