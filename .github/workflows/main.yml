@@ -28,7 +28,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: wait
-        uses: ManualValidation@v0
+        uses: macnev2013/manual-approval@v1.0.18
   DeployToProd:
     name: Deploy to PROD
     needs: TestingInQa
