@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: wait
-         uses: benhamiltonpro/manual-trigger@v1.0.2
+        uses: Automattic/action-required-review@v3
   DeployToProd:
     name: Deploy to PROD
     needs: TestingInQa
