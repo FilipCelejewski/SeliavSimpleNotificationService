@@ -28,7 +28,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: wait
-        uses: Automattic/action-required-review@v3
+      - uses: Automattic/action-required-review@v3
+        with:
+          token: ${{ secrets.REQUIRED_REVIEWS_TOKEN }}
+          requirements: |
+            - paths: unmatched
   DeployToProd:
     name: Deploy to PROD
     needs: TestingInQa
