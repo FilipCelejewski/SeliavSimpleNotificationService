@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: wait
-        uses: macnev2013/manual-approval@v1.0.18
+         uses: benhamiltonpro/manual-trigger@v1.0.2
   DeployToProd:
     name: Deploy to PROD
     needs: TestingInQa
