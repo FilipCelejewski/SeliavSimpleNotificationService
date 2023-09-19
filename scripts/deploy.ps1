@@ -1,4 +1,5 @@
 $BuildDirectoryName = "build"
+$StackName = "filcel-stack-dev"
 
 Write-Host "Creating build directory"
 if (Test-Path $BuildDirectoryName) {
@@ -12,14 +13,13 @@ Compress-Archive -Path src\backend\index.js -DestinationPath $BuildDirectoryName
 Write-Host "Uploading notification function zip to S3 bucket"
 aws s3 cp $BuildDirectoryName\function.zip s3://filcel-deployments/function.zip
 
-aws cloudformation describe-stacks --stack-name filcel-stack-dev
-Write-Host $LASTEXITCODE
-
+Write-Host "Checking if stack already exists"
+aws cloudformation describe-stacks --stack-name $StackName
 if ($LASTEXITCODE -eq 0)
 {
     Write-Host "Updating stack using CloudFormation"
-    aws cloudformation update-stack --stack-name filcel-stack-dev --template-body file://src/backend/template.yml --parameters ParameterKey=Environment,ParameterValue=dev --capabilities CAPABILITY_NAMED_IAM
+    aws cloudformation update-stack --stack-name $StackName --template-body file://src/backend/template.yml --parameters ParameterKey=Environment,ParameterValue=dev --capabilities CAPABILITY_NAMED_IAM
 } else {
     Write-Host "Creating stack using CloudFormation"
-    aws cloudformation create-stack --stack-name filcel-stack-dev --template-body file://src/backend/template.yml --parameters ParameterKey=Environment,ParameterValue=dev --capabilities CAPABILITY_NAMED_IAM
+    aws cloudformation create-stack --stack-name $StackName --template-body file://src/backend/template.yml --parameters ParameterKey=Environment,ParameterValue=dev --capabilities CAPABILITY_NAMED_IAM
 }
